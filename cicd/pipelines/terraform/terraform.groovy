@@ -17,7 +17,7 @@ pipeline {
     stage('terraform') {
       steps {
         sh 'ls'
-        sh './cicd/pipelines/example/terraformw apply -auto-approve -no-color'
+        sh './cicd/pipelines/terraform/terraformw apply -auto-approve -no-color'
       }
     }
   }
