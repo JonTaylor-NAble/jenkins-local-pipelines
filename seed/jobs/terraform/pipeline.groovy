@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
-pipelineJob('build-operator-service-for-jenkins') {
-    displayName('Build Operator Service for Jenkins')
+pipelineJob('build-example-tf') {
+    displayName('Build Example Terraform')
 
     definition {
         cpsScm {
@@ -13,7 +13,7 @@ pipelineJob('build-operator-service-for-jenkins') {
                     branches('*/main')
                 }
             }
-            scriptPath('cicd/pipelines/example/exampleBuild.groovy')
+            scriptPath('cicd/pipelines/terraform/terraform.groovy')
         }
     }
 }
