@@ -16,7 +16,7 @@ pipeline {
     }
     stage('terraform') {
       steps {
-        sh 'ls'
+        sh 'chmod 755 ./cicd/pipelines/terraform/terraformw'
         sh './cicd/pipelines/terraform/terraformw apply -auto-approve -no-color'
       }
     }
