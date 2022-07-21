@@ -10,7 +10,7 @@ pipelineJob('build-operator-service-for-jenkins') {
                     remote {
                         url('https://github.com/jontaylor-nable/jenkins-local-pipelines.git')
                     }
-                    branches('*/master')
+                    branches('*/main')
                 }
             }
             scriptPath('cicd/pipelines/*.groovy')
