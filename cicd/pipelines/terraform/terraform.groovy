@@ -1,5 +1,5 @@
 pipeline {
-  agent { label 'linux'}
+  agent any
   options {
     skipDefaultCheckout(true)
   }
