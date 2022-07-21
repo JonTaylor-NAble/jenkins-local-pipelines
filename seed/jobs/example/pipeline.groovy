@@ -13,7 +13,7 @@ pipelineJob('build-operator-service-for-jenkins') {
                     branches('*/main')
                 }
             }
-            scriptPath('cicd/pipelines/*.groovy')
+            scriptPath('cicd/pipelines/exampleBuild.groovy')
         }
     }
 }
