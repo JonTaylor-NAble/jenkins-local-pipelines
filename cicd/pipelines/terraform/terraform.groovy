@@ -16,7 +16,7 @@ pipeline {
     }
     stage('terraform') {
       steps {
-        sh 'terraform init'
+        sh 'bash terraformw'
       }
     }
   }
