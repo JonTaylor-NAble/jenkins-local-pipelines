@@ -19,6 +19,7 @@ pipeline {
     }
     stage('terraform') {
       steps {
+        sh 'kubectl '
         sh 'terraform -chdir=./cicd/pipelines/terraform/ init'
         tee(file: "tfPlan.log"){
             sh 'terraform -chdir=./cicd/pipelines/terraform/ plan -no-color -json'
@@ -28,7 +29,29 @@ pipeline {
     stage('approval'){
       steps{
         script{
-          def tfResults = readJSON file:'tfPlan.log'
+          def resultString = new File('tfPlan.log').text
+          def results = resultString.split('\n')
+          def outputs = [];
+
+          def enhancedWarning = false;
+          def triggeringChange;
+
+          for (def result in results){
+            outputs.add(readJSON text:result)
+          }
+
+          for (def output in outputs){
+            if (output.change){
+              if (output.change.resource.addr == 'ddocker_container.nginx'){
+                enhancedWarning = true;
+                triggeringChange = output;
+              }
+            }
+
+          }
+
+          echo "Enhanced warning - change caused by:"
+          echo triggeringChange.toString();
 
           if (tfResults["add"]){
             echo "Approval Needed"
