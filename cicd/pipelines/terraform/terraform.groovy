@@ -21,9 +21,13 @@ pipeline {
       steps {
         sh '''
         terraform -chdir=./cicd/pipelines/terraform/ init
-        terraform -chdir=./cicd/pipelines/terraform/ plan -json -out=terraform.tfplan
+        terraform -chdir=./cicd/pipelines/terraform/ show -out=terraform.tfplan
         cat ./cicd/pipelines/terraform/terraform.tfplan
         '''
+
+        import groovy.json.JsonSlurper
+
+
       }
     }
   }
