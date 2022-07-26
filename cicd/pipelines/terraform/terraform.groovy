@@ -33,7 +33,7 @@ pipeline {
           def resultString = readFile(file: 'tfPlan.log');
           def warnIfChanged = ['docker_container.nginx'];
 
-          def requiresWarning = checkPlanForWarning(resultString, warnIfChanged);
+          def requiresWarning = checkPlanForWarning(resultString, warnIfChanged).toString();
           echo requiresWarning
 
            if(requiresWarning){
