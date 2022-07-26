@@ -15,7 +15,9 @@ terraform {
 # Don't need to modify the provider settings
 provider "docker" {}
 
-provider "kustomization" {}
+provider "kustomization" {
+  kubeconfig_path = "~/.kube/config"
+}
 
 # This is the container image from the public docker hub
 resource "docker_image" "nginx" {
@@ -44,9 +46,7 @@ module "example_custom_manifests" {
       namespace = "example-${terraform.workspace}"
 
       resources = [
-        "${path.root}/manifests/example/namespace.yaml",
-        "${path.root}/manifests/example/deployment.yaml",
-        "${path.root}/manifests/example/service.yaml"
+        "${path.root}/manifests/example/namespace.yaml"
       ]
 
       common_labels = {
