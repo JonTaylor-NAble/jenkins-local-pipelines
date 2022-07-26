@@ -26,38 +26,6 @@ pipeline {
       }
     }
     stage('approval'){
-
-      def parseTerraformLog(String contents) {
-        HashMap results = [
-          type: "none",
-          add: 0,
-          change: 0,
-          delete: 0,
-          line: "",
-          is_change: false,
-        ]
-
-        Pattern regex = Pattern.compile(/.*(Plan|Apply).*:\s(\d+).*,\s(\d+).*,\s(\d+).*/)
-        Matcher matcher = regex.matcher(contents)
-        if (matcher.find()) {
-          results["type"] = matcher.group(1)
-          results["add"] = matcher.group(2).toInteger()
-          results["change"] = matcher.group(3).toInteger()
-          results["destroy"] = matcher.group(4).toInteger()
-          results["line"] = matcher.group(0).substring(matcher.group(0).indexOf(":")+1).trim()
-          results["is_change"] = (results["add"] + results["change"] + results["destroy"]).asBoolean()
-        } else {
-          regex = Pattern.compile(/.*(Destroy).*:\s(\d+)\s.*/)
-          matcher = regex.matcher(contents)
-          if (matcher.find()) {
-            results["type"] = matcher.group(1)
-            results["destroy"] = matcher.group(2).toInteger()
-            results["line"] = matcher.group(0).substring(matcher.group(0).indexOf("!")+1).trim()
-            results["is_change"] = (results["add"] + results["change"] + results["destroy"]).asBoolean()
-          }
-        }
-        return results
-      }
       
       tfResults = parseTerraformLog(readFile("tfPlan.log"));
 
@@ -76,4 +44,36 @@ pipeline {
       cleanWs()
     }
   }
+}
+
+def parseTerraformLog(String contents) {
+  HashMap results = [
+    type: "none",
+    add: 0,
+    change: 0,
+    delete: 0,
+    line: "",
+    is_change: false,
+  ]
+
+  Pattern regex = Pattern.compile(/.*(Plan|Apply).*:\s(\d+).*,\s(\d+).*,\s(\d+).*/)
+  Matcher matcher = regex.matcher(contents)
+  if (matcher.find()) {
+    results["type"] = matcher.group(1)
+    results["add"] = matcher.group(2).toInteger()
+    results["change"] = matcher.group(3).toInteger()
+    results["destroy"] = matcher.group(4).toInteger()
+    results["line"] = matcher.group(0).substring(matcher.group(0).indexOf(":")+1).trim()
+    results["is_change"] = (results["add"] + results["change"] + results["destroy"]).asBoolean()
+  } else {
+    regex = Pattern.compile(/.*(Destroy).*:\s(\d+)\s.*/)
+    matcher = regex.matcher(contents)
+    if (matcher.find()) {
+      results["type"] = matcher.group(1)
+      results["destroy"] = matcher.group(2).toInteger()
+      results["line"] = matcher.group(0).substring(matcher.group(0).indexOf("!")+1).trim()
+      results["is_change"] = (results["add"] + results["change"] + results["destroy"]).asBoolean()
+    }
+  }
+  return results
 }
