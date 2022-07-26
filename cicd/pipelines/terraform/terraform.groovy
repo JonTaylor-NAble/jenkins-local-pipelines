@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  tools {
+    terraform 'Terraform'
+  }
   options {
     skipDefaultCheckout(true)
   }
