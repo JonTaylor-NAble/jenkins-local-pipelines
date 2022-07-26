@@ -47,6 +47,11 @@ pipeline {
         }
       }
     }
+    stage('apply'){
+      steps{
+        sh 'terraform -chdir=./cicd/pipelines/terraform/ apply'
+      }
+    }
   }
   post {
     always {
