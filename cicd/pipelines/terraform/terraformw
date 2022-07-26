@@ -11,10 +11,10 @@ curl https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/ins
 chmod 755 install.sh
 
 # Install tfswitch in a location you have permission
-sudo ./install.sh -b /usr/local/bin
+./install.sh -b /var/jenkins_home/workspace/example
 
 # set custom bin path
-CUSTOMBIN=/usr/local/bin/.bin
+CUSTOMBIN=/var/jenkins_home/workspace/example
 
 #Add custom bin path to PATH environment
 export PATH=$CUSTOMBIN:$PATH
