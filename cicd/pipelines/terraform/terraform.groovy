@@ -19,53 +19,31 @@ pipeline {
     }
     stage('terraform') {
       steps {
-        sh 'kubectl '
         sh 'terraform -chdir=./cicd/pipelines/terraform/ init -no-color'
       }
     }
     stage('approval'){
       steps{
+
         script{
           tee(file: "tfPlan.log"){
             sh 'terraform -chdir=./cicd/pipelines/terraform/ plan -no-color -json'
           }
-          def resultString = readFile(file: 'tfPlan.log')
-          def results = resultString.split('\n')
-          def outputs = [];
 
-          def enhancedWarning = false;
-          def triggeringChange;
+          def resultString = readFile(file: 'tfPlan.log');
+          def warnIfChanged = ['docker_container.nginx'];
 
-          for (def result in results){
-            try{
-              def thisOutput = readJSON text:result;
-              outputs.add(thisOutput)
-            } catch (Exception ex){
-            }
-          }
-
-          for (def output in outputs){
-            if (output.change){
-              if (output.change.resource.addr == 'docker_container.nginx'){
-                enhancedWarning = true;
-                triggeringChange = output;
-              }
-            }
-
-          }
-
-
-          if (enhancedWarning){
-
-            echo "Enhanced warning - change caused by:"
-            echo triggeringChange.toString();
-            echo "Approval Needed"
+           if(checkPlanForWarning(resultString, warnIfChanged)){
             timeout(time: 5, unit: "MINUTES") {
-              input message: 'Do you want the deploy to Proceed?', ok: 'Yes'
+                input message: 'Do you want the deploy to Proceed?', ok: 'Yes'
             }
-          } else {
-            echo "No Approval Needed"
-          }
+           } else {
+            timeout(time: 5, unit: "MINUTES") {
+                input message: 'THIS WILL TRIGGER A RESTART OF THE JENKINS BUILD. CHECK WITH THE BUILD TEAMS BEFORE APPROVING. Do you want the deploy to Proceed?', ok: 'Yes'
+            }
+           }
+
+
         }
       }
     }
@@ -75,4 +53,32 @@ pipeline {
       cleanWs()
     }
   }
+}
+
+def checkPlanForWarning(planOutputJSON, protectedProperties){
+
+        def results = planOutputJSON.split('\n')
+        def outputs = [];
+
+        def enhancedWarning = false;
+        def triggeringChange;
+
+        for (def result in results){
+          try{
+            def thisOutput = readJSON text:result;
+            outputs.add(thisOutput)
+          } catch (Exception ex){
+          }
+        }
+
+        for (def output in outputs){
+          if (output.change){
+            if (protectedProperties.indexOf(output.change.resource.addr) > -1){
+              enhancedWarning = true;
+              triggeringChange = output;
+            }
+          }
+        }
+
+        return enhancedWarning;
 }
