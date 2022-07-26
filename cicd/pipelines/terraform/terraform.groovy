@@ -20,14 +20,15 @@ pipeline {
     stage('terraform') {
       steps {
         sh 'kubectl '
-        sh 'terraform -chdir=./cicd/pipelines/terraform/ init'
-        tee(file: "tfPlan.log"){
-            sh 'terraform -chdir=./cicd/pipelines/terraform/ plan -no-color -json'
-        }
+        sh 'terraform -chdir=./cicd/pipelines/terraform/ init -no-color'
       }
     }
     stage('approval'){
       steps{
+
+        tee(file: "tfPlan.log"){
+            sh 'terraform -chdir=./cicd/pipelines/terraform/ plan -no-color -json'
+        }
         script{
           def resultString = new File('tfPlan.log').text
           def results = resultString.split('\n')
