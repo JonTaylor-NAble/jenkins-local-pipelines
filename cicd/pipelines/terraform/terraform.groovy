@@ -21,7 +21,7 @@ pipeline {
       steps {
         sh '''
         terraform -chdir=./cicd/pipelines/terraform/ init
-        terraform -chdir=./cicd/pipelines/terraform/ show -out=terraform.tfplan
+        terraform -chdir=./cicd/pipelines/terraform/ show terraform.tfplan
         cat ./cicd/pipelines/terraform/terraform.tfplan
         '''
       }
