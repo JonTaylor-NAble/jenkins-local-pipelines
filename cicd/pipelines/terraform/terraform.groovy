@@ -19,6 +19,7 @@ pipeline {
     }
     stage('terraform') {
       steps {
+        sh 'cd ./cicd/pipelines/terraform'
         sh 'terraform init'
       }
     }
