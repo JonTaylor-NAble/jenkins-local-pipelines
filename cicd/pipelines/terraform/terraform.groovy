@@ -19,9 +19,11 @@ pipeline {
     }
     stage('terraform') {
       steps {
-        sh 'terraform init -chdir=./cicd/pipelines/terraform/'
-        sh 'terraform plan -chdir=./cicd/pipelines/terraform/ -out=terraform.tfplan'
-        sh 'cat ./cicd/pipelines/terraform/terraform.tfplan'
+        sh '''
+        terraform -chdir=./cicd/pipelines/terraform/ init
+        terraform -chdir=./cicd/pipelines/terraform/ plan -out=terraform.tfplan
+        cat ./cicd/pipelines/terraform/terraform.tfplan
+        '''
       }
     }
   }
