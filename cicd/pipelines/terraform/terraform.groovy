@@ -19,7 +19,7 @@ pipeline {
     }
     stage('terraform') {
       steps {
-        sh 'cd ./cicd/pipelines/terraform > terraform init'
+        sh 'cd ./cicd/pipelines/terraform > terraform init > terraform plan'
       }
     }
   }
