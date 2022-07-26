@@ -16,7 +16,7 @@ pipeline {
     }
     stage('terraform') {
       steps {
-        sh 'bash terraformw'
+        sh 'bash ./cicd/pipelines/terraform/terraformw'
       }
     }
   }
