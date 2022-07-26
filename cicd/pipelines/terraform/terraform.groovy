@@ -41,13 +41,12 @@ pipeline {
               def thisOutput = readJSON text:result;
               outputs.add(thisOutput)
             } catch (Exception ex){
-              echo "Invalid JSON"
             }
           }
 
           for (def output in outputs){
             if (output.change){
-              if (output.change.resource.addr == 'ddocker_container.nginx'){
+              if (output.change.resource.addr == 'docker_container.nginx'){
                 enhancedWarning = true;
                 triggeringChange = output;
               }
