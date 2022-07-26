@@ -46,6 +46,9 @@ pipeline {
   }
 }
 
+import java.util.regex.Pattern
+import java.util.regex.Matcher
+
 def parseTerraformLog(String contents) {
   HashMap results = [
     type: "none",
