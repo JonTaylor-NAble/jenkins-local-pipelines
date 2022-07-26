@@ -33,7 +33,10 @@ pipeline {
           def resultString = readFile(file: 'tfPlan.log');
           def warnIfChanged = ['docker_container.nginx'];
 
-           if(checkPlanForWarning(resultString, warnIfChanged)){
+          def requiresWarning = checkPlanForWarning(resultString, warnIfChanged);
+          echo requiresWarning
+
+           if(requiresWarning){
             timeout(time: 5, unit: "MINUTES") {
                 input message: 'Do you want the deploy to Proceed?', ok: 'Yes'
             }
@@ -79,6 +82,7 @@ def checkPlanForWarning(planOutputJSON, protectedProperties){
         for (def output in outputs){
           if (output.change){
             if (protectedProperties.indexOf(output.change.resource.addr) > -1){
+              echo output.change.resource.addr
               enhancedWarning = true;
               triggeringChange = output;
             }
