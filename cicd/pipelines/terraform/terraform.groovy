@@ -5,7 +5,6 @@ pipeline {
   }
   options {
     skipDefaultCheckout(true)
-    ansiColor('xterm')
   }
   stages{
     stage('clean workspace') {
@@ -50,7 +49,7 @@ pipeline {
     }
     stage('apply'){
       steps{
-        sh 'terraform -chdir=./cicd/pipelines/terraform/ apply -auto-approve'
+        sh 'terraform -chdir=./cicd/pipelines/terraform/ apply -auto-approve -no-color'
       }
     }
   }
