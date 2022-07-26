@@ -25,13 +25,11 @@ pipeline {
     }
     stage('approval'){
       steps{
-
-        tee(file: "tfPlan.log"){
-            sh 'terraform -chdir=./cicd/pipelines/terraform/ plan -no-color -json'
-        }
         script{
-          sh 'ls'
-          def resultString = new File('./tfPlan.log').text
+          tee(file: "tfPlan.log"){
+            sh 'terraform -chdir=./cicd/pipelines/terraform/ plan -no-color -json'
+          }
+          def resultString = new File('tfPlan.log').text
           def results = resultString.split('\n')
           def outputs = [];
 
