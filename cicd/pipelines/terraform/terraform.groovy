@@ -37,10 +37,12 @@ pipeline {
           def triggeringChange;
 
           for (def result in results){
-            echo results.size() + " results"
-            echo result
-            def thisOutput = readJSON text:result
-            outputs.add(thisOutput)
+            try{
+              def thisOutput = readJSON text:result;
+              outputs.add(thisOutput)
+            } catch (Exception ex){
+              echo "Invalid JSON"
+            }
           }
 
           for (def output in outputs){
