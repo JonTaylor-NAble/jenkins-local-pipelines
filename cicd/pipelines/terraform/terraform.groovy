@@ -24,9 +24,9 @@ pipeline {
         terraform -chdir=./cicd/pipelines/terraform/ show -out=terraform.tfplan
         cat ./cicd/pipelines/terraform/terraform.tfplan
         '''
-
-        import groovy.json.JsonSlurper
-
+       script{
+                import groovy.json.JsonSlurper
+       }
 
       }
     }
