@@ -25,7 +25,7 @@ pipeline {
         cat ./cicd/pipelines/terraform/terraform.tfplan
         '''
        script{
-                import groovy.json.JsonSlurper
+                //import groovy.json.JsonSlurper
        }
 
       }
