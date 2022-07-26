@@ -37,7 +37,8 @@ pipeline {
           def triggeringChange;
 
           for (def result in results){
-            outputs.add(readJSON text:result)
+            def thisOutput = readJSON text:result
+            outputs.add(thisOutput)
           }
 
           for (def output in outputs){
