@@ -26,17 +26,19 @@ pipeline {
       }
     }
     stage('approval'){
-      
-      tfResults = parseTerraformLog(readFile("tfPlan.log"));
+      steps{
+        tfResults = parseTerraformLog(readFile("tfPlan.log"));
 
-      if (tfResults["add"]){
-        echo "Approval Needed"
-        timeout(time: 5, unit: "MINUTES") {
-          input message: 'Do you want the deploy to Proceed?', ok: 'Yes'
+        if (tfResults["add"]){
+          echo "Approval Needed"
+          timeout(time: 5, unit: "MINUTES") {
+            input message: 'Do you want the deploy to Proceed?', ok: 'Yes'
+          }
+        } else {
+          echo "No Approval Needed"
         }
-      } else {
-        echo "No Approval Needed"
       }
+
     }
   }
   post {
