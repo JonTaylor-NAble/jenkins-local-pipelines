@@ -23,15 +23,11 @@ module "example_custom_manifests" {
   configuration_base_key = "default"  # must match workspace name
   configuration = {
     default = {
-      namespace = "example-${terraform.workspace}"
 
       resources = [
         "${path.root}/manifests/example/namespace.yaml"
       ]
 
-      common_labels = {
-        "env" = terraform.workspace
-      }
     }
   }
 }
