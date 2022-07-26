@@ -21,7 +21,7 @@ pipeline {
       steps {
         sh 'terraform -chdir=./cicd/pipelines/terraform/ init'
         tee(file: "tfPlan.log"){
-            sh 'terraform -chdir=./cicd/pipelines/terraform/ plan -no-color'
+            sh 'terraform -chdir=./cicd/pipelines/terraform/ plan -no-color -json'
         }
       }
     }
