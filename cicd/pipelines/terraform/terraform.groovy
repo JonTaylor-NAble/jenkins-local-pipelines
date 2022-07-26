@@ -22,7 +22,7 @@ pipeline {
         sh '''
         terraform -chdir=./cicd/pipelines/terraform/ init
         terraform -chdir=./cicd/pipelines/terraform/ plan -json -out=terraform.tfplan
-        cat -v ./cicd/pipelines/terraform/terraform.tfplan
+        cat ./cicd/pipelines/terraform/terraform.tfplan
         '''
       }
     }
