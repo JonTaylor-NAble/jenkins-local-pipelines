@@ -55,10 +55,11 @@ pipeline {
 
           }
 
-          echo "Enhanced warning - change caused by:"
-          echo triggeringChange.toString();
 
-          if (tfResults["add"]){
+          if (enhancedWarning){
+
+            echo "Enhanced warning - change caused by:"
+            echo triggeringChange.toString();
             echo "Approval Needed"
             timeout(time: 5, unit: "MINUTES") {
               input message: 'Do you want the deploy to Proceed?', ok: 'Yes'
