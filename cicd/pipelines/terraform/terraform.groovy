@@ -31,7 +31,7 @@ pipeline {
           }
 
           def resultString = readFile(file: 'tfPlan.log');
-          def warnIfChanged = ['docker_container.nginx'];
+          def warnIfChanged = ['module.example_custom_manifests.data.kustomization_overlay.current'];
 
           def requiresWarning = checkPlanForWarning(resultString, warnIfChanged).toString();
           echo requiresWarning
