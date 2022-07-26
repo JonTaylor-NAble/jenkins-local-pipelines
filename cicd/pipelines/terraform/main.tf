@@ -5,11 +5,17 @@ terraform {
       source = "kreuzwerker/docker"
       version = "~> 2.13.0"
     }
+    kustomization = {
+      source  = "kbst/kustomize"
+      version = "0.2.0-beta.3"
+    }
   }
 }
 
 # Don't need to modify the provider settings
 provider "docker" {}
+
+provider "kustomization" {}
 
 # This is the container image from the public docker hub
 resource "docker_image" "nginx" {
