@@ -27,3 +27,25 @@ resource "docker_container" "nginx" {
     external = 8000
   }
 }
+
+module "example_custom_manifests" {
+  source  = "kbst.xyz/catalog/custom-manifests/kustomization"
+  version = "0.3.0"
+
+  configuration_base_key = "default"  # must match workspace name
+  configuration = {
+    default = {
+      namespace = "example-${terraform.workspace}"
+
+      resources = [
+        "${path.root}/manifests/example/namespace.yaml",
+        "${path.root}/manifests/example/deployment.yaml",
+        "${path.root}/manifests/example/service.yaml"
+      ]
+
+      common_labels = {
+        "env" = terraform.workspace
+      }
+    }
+  }
+}
