@@ -27,7 +27,7 @@ pipeline {
 
         script{
           
-          sh 'terraform -chdir=./cicd/pipelines/terraform/ plan -out tf.plan'
+          sh 'terraform -chdir=./cicd/pipelines/terraform/ plan -no-color -out tf.plan'
 
           def requiresWarning = checkForJenkinsMasterUpdates('tf.plan');
 
@@ -67,9 +67,9 @@ pipeline {
 def checkForJenkinsMasterUpdates(planPath){
 
   sh 'set +x'
-  tee(file: "tfPlan.log"){
-    sh 'terraform -chdir=./cicd/pipelines/terraform/ show -json ' + planPath
-  }
+  //tee(file: "tfPlan.log"){
+  sh 'terraform -chdir=./cicd/pipelines/terraform/ show -json ' + planPath + ' > tfPlan.log'
+  //}
   sh 'set -x'
 
   def resultString = readFile(file: 'tfPlan.log');
