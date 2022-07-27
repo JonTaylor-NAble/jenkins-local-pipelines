@@ -109,11 +109,21 @@ def checkForJenkinsMasterUpdates(planOutputJSON){
                       if (compBefore != compAfter){
                         enhancedWarning = true;
                         triggeringChange = compAfter;
+                      } else {
+                        echo "Manifest present, but unchanged"
                       }
+                    } else {
+                      echo "No Spec or Master nodes"
                     }
+                  } else {
+                    echo "Not Jenkins Kind"
                   }
 
+                } else {
+                  echo "Not an update"
                 }
+              } else {
+                echo "Not changed"
               }
             }
           }
