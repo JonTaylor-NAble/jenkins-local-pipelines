@@ -1,5 +1,3 @@
-@Library('jenkins-local-shared-lib')
-
 pipeline {
   agent any
   tools {
