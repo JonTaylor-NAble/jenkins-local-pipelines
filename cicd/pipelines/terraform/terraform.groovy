@@ -73,8 +73,7 @@ def checkForJenkinsMasterUpdates(planPath){
   sh 'set -x'
 
   def resultString = readFile(file: 'tfPlan.log');
-
-  def results = planOutputJSON.split('\n')
+  def results = resultString.split('\n')
 
   def enhancedWarning = false;
   def triggeringChange;
