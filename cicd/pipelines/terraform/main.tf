@@ -25,7 +25,8 @@ module "example_custom_manifests" {
     default = {
 
       resources = [
-        "${path.root}/manifests/example/namespace.yaml"
+        "${path.root}/manifests/example/namespace.yaml",
+        "${path.root}/manifests/example/jenkins.yaml"
       ]
 
     }
