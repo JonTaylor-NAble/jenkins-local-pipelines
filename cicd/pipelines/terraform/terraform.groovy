@@ -40,6 +40,7 @@ pipeline {
                 input message: 'Do you want the deploy to Proceed?', ok: 'Yes'
             }
            }
+           
         }
       }
     }
@@ -52,8 +53,6 @@ pipeline {
   post {
     always {
       withCredentials([gitUsernamePassword(credentialsId: 'github-account', gitToolName: 'git-tool')]) {
-            sh 'git config --global user.email "jonathan.taylor@n-able.com"'
-            sh 'git config --global user.name "Jon Taylor"'
             sh 'git add .'
             sh 'git commit -m "Post build commit"'
             sh 'git push origin HEAD:main'
@@ -66,11 +65,9 @@ pipeline {
 
 def checkForJenkinsMasterUpdates(planPath){
 
-  sh 'set +x'
   //tee(file: "tfPlan.log"){
   sh 'terraform -chdir=./cicd/pipelines/terraform/ show -json ' + planPath + ' > tfPlan.log'
   //}
-  sh 'set -x'
 
   def resultString = readFile(file: 'tfPlan.log');
   def results = resultString.split('\n')
