@@ -28,15 +28,8 @@ pipeline {
         script{
           
           sh 'terraform -chdir=./cicd/pipelines/terraform/ plan -out tf.plan'
-          
-          tee(file: "tfPlan.log"){
-            sh 'terraform -chdir=./cicd/pipelines/terraform/ show -json tf.plan'
-          }
 
-          def resultString = readFile(file: 'tfPlan.log');
-
-
-          def requiresWarning = checkForJenkinsMasterUpdates(resultString);
+          def requiresWarning = checkForJenkinsMasterUpdates('tf.plan');
 
            if(requiresWarning){
             timeout(time: 5, unit: "MINUTES") {
@@ -58,7 +51,6 @@ pipeline {
   }
   post {
     always {
-      sh 'rm -f tfPlan.log'
       withCredentials([gitUsernamePassword(credentialsId: 'github-account', gitToolName: 'git-tool')]) {
             sh 'git config --global user.email "jonathan.taylor@n-able.com"'
             sh 'git config --global user.name "Jon Taylor"'
@@ -72,52 +64,61 @@ pipeline {
   }
 }
 
-def checkForJenkinsMasterUpdates(planOutputJSON){
+def checkForJenkinsMasterUpdates(planPath){
 
-        def results = planOutputJSON.split('\n')
+  sh 'set +x'
+  tee(file: "tfPlan.log"){
+    sh 'terraform show -json ' + planPath
+  }
+  sh 'set -x'
 
-        def enhancedWarning = false;
-        def triggeringChange;
-        def output;
+  def resultString = readFile(file: 'tfPlan.log');
 
-        for (def result in results){
-          try{
-            output = readJSON text:result;
-          } catch (Exception ex){
-          }
-        }
+  def results = planOutputJSON.split('\n')
 
-        if (output){
-          if (output.resource_changes){
-            for (def resource_change in output.resource_changes){
-              if (resource_change.change){
-                if (resource_change.change.actions.indexOf('update') > -1){
-                  
-                  def manifestBeforeStr = resource_change.change.before.manifest;
-                  def manifestAfterStr = resource_change.change.after.manifest;
+  def enhancedWarning = false;
+  def triggeringChange;
+  def output;
 
-                  def manifestBefore = readJSON text:manifestBeforeStr;
-                  def manifestAfter = readJSON text:manifestAfterStr;
+  for (def result in results){
+    try{
+      output = readJSON text:result;
+    } catch (Exception ex){
+    }
+  }
 
-                  if (manifestBefore.kind == 'Jenkins'){
-                    if (manifestBefore.spec && manifestBefore.spec.master){
-                      def compBefore = manifestBefore.spec.master;
-                      def compAfter = manifestAfter.spec.master;
+  if (output){
+    if (output.resource_changes){
+      for (def resource_change in output.resource_changes){
+        if (resource_change.change){
+          if (resource_change.change.actions.indexOf('update') > -1){
 
-                      if (compBefore != compAfter){
-                        enhancedWarning = true;
-                        triggeringChange = compAfter;
-                        echo "Master node config is changed"
-                      } 
-                    }
-                  } 
-                }
+            def manifestBeforeStr = resource_change.change.before.manifest;
+            def manifestAfterStr = resource_change.change.after.manifest;
+
+            def manifestBefore = readJSON text:manifestBeforeStr;
+            def manifestAfter = readJSON text:manifestAfterStr;
+
+            if (manifestBefore.kind == 'Jenkins'){
+              if (manifestBefore.spec && manifestBefore.spec.master){
+                def compBefore = manifestBefore.spec.master;
+                def compAfter = manifestAfter.spec.master;
+
+                if (compBefore != compAfter){
+                  enhancedWarning = true;
+                  triggeringChange = compAfter;
+                  echo "Master node config is changed"
+                } 
               }
-            }
+            } 
           }
-        } else {
-          echo "Invalid TF Plan JSON"
         }
+      }
+    }
+  } else {
+    echo "Invalid TF Plan JSON"
+  }
 
-        return enhancedWarning;
+  sh 'rm -f tfPlan.log'
+  return enhancedWarning;
 }
