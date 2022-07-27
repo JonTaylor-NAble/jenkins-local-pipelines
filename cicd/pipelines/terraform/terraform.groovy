@@ -26,14 +26,15 @@ pipeline {
       steps{
 
         script{
+          sh 'terraform -chdir=./cicd/pipelines/terraform/ plan -out tf.plan'
           tee(file: "tfPlan.log"){
-            sh 'terraform -chdir=./cicd/pipelines/terraform/ plan -no-color -json'
+            sh 'terraform -chdir=./cicd/pipelines/terraform/ show -json tf.plan'
           }
 
           def resultString = readFile(file: 'tfPlan.log');
-          def warnIfChanged = ['module.example_custom_manifests.data.kustomization_overlay.current'];
 
-          def requiresWarning = checkPlanForWarning(resultString, warnIfChanged).toString();
+
+          def requiresWarning = checkPlanForWarning(resultString).toString();
           echo requiresWarning
 
            if(requiresWarning){
@@ -72,30 +73,50 @@ pipeline {
   }
 }
 
-def checkPlanForWarning(planOutputJSON, protectedProperties){
+def checkPlanForWarning(planOutputJSON){
 
         def results = planOutputJSON.split('\n')
-        def outputs = [];
 
         def enhancedWarning = false;
         def triggeringChange;
+        def output;
 
         for (def result in results){
           try{
-            def thisOutput = readJSON text:result;
-            outputs.add(thisOutput)
+            output = readJSON text:result;
           } catch (Exception ex){
           }
         }
 
-        for (def output in outputs){
-          if (output.change){
-            if (protectedProperties.indexOf(output.change.resource.addr) > -1){
-              echo output.change.resource.addr
-              enhancedWarning = true;
-              triggeringChange = output;
+        if (output){
+          if (output.resource_changes){
+            for (def resource_change in output.resource_changes){
+              if (resource_change.change){
+                if (resource_change.change.actions.indexOf('update') > -1){
+                  def manifestBeforeStr = resource_change.change.before.manifest;
+                  def manifestAfterStr = resource_change.change.after.manifest;
+
+                  def manifestBefore = readJSON text:manifestBeforeStr;
+                  def manifestAfter = readJSON text:manifestAfterStr;
+
+                  if (manifestBefore.kind == 'Jenkins'){
+                    if (manifestBefore.spec && manifestBefore.spec.master){
+                      def compBefore = manifestBefore.spec.master;
+                      def compAfter = manifestAfter.spec.master;
+
+                      if (compBefore != compAfter){
+                        enhancedWarning = true;
+                        triggeringChange = compAfter;
+                      }
+                    }
+                  }
+
+                }
+              }
             }
           }
+        } else {
+          echo "Invalid TF Plan JSON"
         }
 
         return enhancedWarning;

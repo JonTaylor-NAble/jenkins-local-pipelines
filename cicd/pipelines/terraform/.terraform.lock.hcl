@@ -5,6 +5,7 @@ provider "registry.terraform.io/kbst/kustomization" {
   version     = "0.9.0"
   constraints = ">= 0.8.0, 0.9.0"
   hashes = [
+    "h1:1p/gsZY4vpF4hwlM+6a4RrenF/OmOsaSxJduI+qRgS0=",
     "h1:hB48Ry22l0kMMsVqeDWRl06BZ8iSqaPvzgkGigxB84U=",
     "zh:0a97cd1f5652ddb30eedd5160ab5bcb848879d0d94931206e37bed635c9a7f6a",
     "zh:203084fea6153629884cbb3d2f487e4ba96472a8e8f1f5a8f49518131f78121f",
@@ -27,6 +28,7 @@ provider "registry.terraform.io/kreuzwerker/docker" {
   version     = "2.13.0"
   constraints = "~> 2.13.0"
   hashes = [
+    "h1:3NuY6XB+EMN2y327pSK0pJxsTpuaj0dLhV9VJBvxYgk=",
     "h1:qbRlH5PT98noyf920N9tQMrELjlK8qTe7pJuf+daK6I=",
     "zh:0df685adc7b5740ae0def7235a44e1bce2f71beaf155319c2464ad2fba5cb321",
     "zh:2cf4b4f840fa84f1b906f4cca58c9782375e9988ad354afcd85b0180cd784205",
