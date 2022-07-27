@@ -36,12 +36,11 @@ pipeline {
           def resultString = readFile(file: 'tfPlan.log');
 
 
-          def requiresWarning = checkForJenkinsMasterUpdates(resultString).toString();
-          echo requiresWarning
+          def requiresWarning = checkForJenkinsMasterUpdates(resultString);
 
            if(requiresWarning){
             timeout(time: 5, unit: "MINUTES") {
-                input message: 'HIS WILL TRIGGER A RESTART OF THE JENKINS BUILD. CHECK WITH THE BUILD TEAMS BEFORE APPROVING. Do you want the deploy to Proceed?', ok: 'Yes'
+                input message: 'THIS WILL TRIGGER A RESTART OF THE JENKINS BUILD. CHECK WITH THE BUILD TEAMS BEFORE APPROVING. Do you want the deploy to Proceed?', ok: 'Yes'
             }
            } else {
             timeout(time: 5, unit: "MINUTES") {
