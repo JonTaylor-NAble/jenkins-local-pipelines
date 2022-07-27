@@ -41,15 +41,13 @@ pipeline {
 
            if(requiresWarning){
             timeout(time: 5, unit: "MINUTES") {
-                input message: 'Do you want the deploy to Proceed?', ok: 'Yes'
+                input message: 'HIS WILL TRIGGER A RESTART OF THE JENKINS BUILD. CHECK WITH THE BUILD TEAMS BEFORE APPROVING. Do you want the deploy to Proceed?', ok: 'Yes'
             }
            } else {
             timeout(time: 5, unit: "MINUTES") {
-                input message: 'THIS WILL TRIGGER A RESTART OF THE JENKINS BUILD. CHECK WITH THE BUILD TEAMS BEFORE APPROVING. Do you want the deploy to Proceed?', ok: 'Yes'
+                input message: 'Do you want the deploy to Proceed?', ok: 'Yes'
             }
            }
-
-
         }
       }
     }
@@ -109,6 +107,7 @@ def checkForJenkinsMasterUpdates(planOutputJSON){
                       if (compBefore != compAfter){
                         enhancedWarning = true;
                         triggeringChange = compAfter;
+                        echo "Master node config is changed"
                       } else {
                         echo "Manifest present, but unchanged"
                       }
