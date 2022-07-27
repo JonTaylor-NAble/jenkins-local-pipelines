@@ -7,3 +7,18 @@
 [31m│[0m [0m
 [31m│[0m [0mPlan read error: open tf.plan: no such file or directory
 [31m╵[0m[0m
++ terraform show -json ./cicd/pipelines/terraform/tf.plan
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mFailed to load plugin schemas[0m
+[31m│[0m [0m
+[31m│[0m [0m[0mError while loading schemas for plugin components: 2 problems:
+[31m│[0m [0m
+[31m│[0m [0m- Failed to obtain provider schema: Could not load the schema for provider
+[31m│[0m [0mregistry.terraform.io/kbst/kustomization: failed to instantiate provider
+[31m│[0m [0m"registry.terraform.io/kbst/kustomization" to obtain schema: unavailable
+[31m│[0m [0mprovider "registry.terraform.io/kbst/kustomization".
+[31m│[0m [0m- Failed to obtain provider schema: Could not load the schema for provider
+[31m│[0m [0mregistry.terraform.io/kreuzwerker/docker: failed to instantiate provider
+[31m│[0m [0m"registry.terraform.io/kreuzwerker/docker" to obtain schema: unavailable
+[31m│[0m [0mprovider "registry.terraform.io/kreuzwerker/docker"..
+[31m╵[0m[0m
