@@ -58,6 +58,7 @@ pipeline {
   }
   post {
     always {
+      sh 'rm -f tfPlan.log'
       withCredentials([gitUsernamePassword(credentialsId: 'github-account', gitToolName: 'git-tool')]) {
             sh 'git config --global user.email "jonathan.taylor@n-able.com"'
             sh 'git config --global user.name "Jon Taylor"'
