@@ -58,11 +58,14 @@ pipeline {
   }
   post {
     always {
-      sh 'git config --global user.email "jonathan.taylor@n-able.com"'
-      sh 'git config --global user.name "Jon Taylor"'
-      sh 'git add .'
-      sh 'git commit -m "Post build commit"'
-      sh 'git push origin HEAD:main'
+      withCredentials([gitUsernamePassword(credentialsId: 'github-account', gitToolName: 'git-tool')]) {
+            sh 'git config --global user.email "jonathan.taylor@n-able.com"'
+            sh 'git config --global user.name "Jon Taylor"'
+            sh 'git add .'
+            sh 'git commit -m "Post build commit"'
+            sh 'git push origin HEAD:main'
+      }
+
       cleanWs()
     }
   }
