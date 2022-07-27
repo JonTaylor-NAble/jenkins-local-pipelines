@@ -92,6 +92,7 @@ def checkForJenkinsMasterUpdates(planOutputJSON){
             for (def resource_change in output.resource_changes){
               if (resource_change.change){
                 if (resource_change.change.actions.indexOf('update') > -1){
+                  
                   def manifestBeforeStr = resource_change.change.before.manifest;
                   def manifestAfterStr = resource_change.change.after.manifest;
 
@@ -107,21 +108,10 @@ def checkForJenkinsMasterUpdates(planOutputJSON){
                         enhancedWarning = true;
                         triggeringChange = compAfter;
                         echo "Master node config is changed"
-                      } else {
-                        echo "Manifest present, but unchanged"
-                      }
-                    } else {
-                      echo "No Spec or Master nodes"
+                      } 
                     }
-                  } else {
-                    echo "Not Jenkins Kind"
-                  }
-
-                } else {
-                  echo "Not an update"
+                  } 
                 }
-              } else {
-                echo "Not changed"
               }
             }
           }
