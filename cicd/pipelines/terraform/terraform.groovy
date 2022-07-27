@@ -29,7 +29,7 @@ pipeline {
           
           sh 'terraform -chdir=./cicd/pipelines/terraform/ plan -out tf.plan'
 
-          def requiresWarning = checkForJenkinsMasterUpdates('tf.plan');
+          def requiresWarning = checkForJenkinsMasterUpdates('./cicd/pipelines/terraform/tf.plan');
 
            if(requiresWarning){
             timeout(time: 5, unit: "MINUTES") {
