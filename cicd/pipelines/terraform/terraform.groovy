@@ -62,7 +62,7 @@ pipeline {
       sh 'git config --global user.name "Jon Taylor"'
       sh 'git add .'
       sh 'git commit -m "Post build commit"'
-      sh 'git push'
+      sh 'git push origin HEAD:main'
       cleanWs()
     }
   }
