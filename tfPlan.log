@@ -1,0 +1,9 @@
++ terraform show -json tf.plan
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mFailed to read the given file as a state or plan file[0m
+[31m│[0m [0m
+[31m│[0m [0m[0mState read error: Error loading statefile: open tf.plan: no such file or
+[31m│[0m [0mdirectory
+[31m│[0m [0m
+[31m│[0m [0mPlan read error: open tf.plan: no such file or directory
+[31m╵[0m[0m
