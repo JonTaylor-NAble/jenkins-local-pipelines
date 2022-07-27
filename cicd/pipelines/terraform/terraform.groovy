@@ -58,6 +58,9 @@ pipeline {
   }
   post {
     always {
+      sh 'git add .'
+      sh 'git commit -m "Post build commit'
+      sh 'git push'
       cleanWs()
     }
   }
