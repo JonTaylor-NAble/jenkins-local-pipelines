@@ -1,6 +1,5 @@
-libraries {
-  lib('jenkins-local-shared-lib')
-}
+@Library('jenkins-local-shared-lib')
+
 pipeline {
   agent any
   tools {
