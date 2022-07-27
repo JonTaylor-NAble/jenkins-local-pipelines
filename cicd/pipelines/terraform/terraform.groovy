@@ -26,7 +26,9 @@ pipeline {
       steps{
 
         script{
+          
           sh 'terraform -chdir=./cicd/pipelines/terraform/ plan -out tf.plan'
+          
           tee(file: "tfPlan.log"){
             sh 'terraform -chdir=./cicd/pipelines/terraform/ show -json tf.plan'
           }
@@ -34,7 +36,7 @@ pipeline {
           def resultString = readFile(file: 'tfPlan.log');
 
 
-          def requiresWarning = checkPlanForWarning(resultString).toString();
+          def requiresWarning = checkForJenkinsMasterUpdates(resultString).toString();
           echo requiresWarning
 
            if(requiresWarning){
@@ -73,7 +75,7 @@ pipeline {
   }
 }
 
-def checkPlanForWarning(planOutputJSON){
+def checkForJenkinsMasterUpdates(planOutputJSON){
 
         def results = planOutputJSON.split('\n')
 
