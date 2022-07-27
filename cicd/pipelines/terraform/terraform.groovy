@@ -29,11 +29,11 @@ pipeline {
           
           sh 'terraform -chdir=./cicd/pipelines/terraform/ plan -no-color -out tf.plan'
 
-          def requiresWarning = checkForJenkinsMasterUpdates 'tf.plan';
+          def requiresWarning = checkForJenkinsMasterUpdates('tf.plan', './cicd/pipelines/terraform/');
 
            if(requiresWarning){
             timeout(time: 5, unit: "MINUTES") {
-                input message: 'THIS WILL TRIGGER A RESTART OF THE JENKINS BUILD. CHECK WITH THE BUILD TEAMS BEFORE APPROVING. Do you want the deploy to Proceed?', ok: 'Yes'
+                input message: 'THIS WILL TRIGGER A RESTART. CHECK WITH THE BUILD TEAMS BEFORE APPROVING. Do you want the deploy to Proceed?', ok: 'Yes'
             }
            } else {
             timeout(time: 5, unit: "MINUTES") {
