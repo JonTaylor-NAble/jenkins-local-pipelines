@@ -58,7 +58,7 @@ pipeline {
   }
   post {
     always {
-      sh 'gitconfig --global user.email "jonathan.taylor@n-able.com"'
+      sh 'git config --global user.email "jonathan.taylor@n-able.com"'
       sh 'git config --global user.name "Jon Taylor"'
       sh 'git add .'
       sh 'git commit -m "Post build commit"'
