@@ -55,16 +55,20 @@ pipeline {
     }
     stage('apply'){
       steps{
-        sh 'terraform -chdir=./cicd/pipelines/terraform/ apply -auto-approve -no-color'
+        sh 'terraform -chdir=./cicd/pipelines/terraform/ apply -auto-approve'
       }
     }
   }
   post {
     always {
       withCredentials([gitUsernamePassword(credentialsId: 'github-account', gitToolName: 'git-tool')]) {
-            sh 'git add .'
-            sh 'git commit -m "Post build commit"'
-            sh 'git push origin HEAD:main'
+            sh '''
+            set +x
+            git add .
+            git commit -m "Post-build Commit"
+            git push origin HEAD:main
+            set -x
+            '''
       }
 
       cleanWs()
