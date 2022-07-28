@@ -33,6 +33,7 @@ pipeline {
 
           dir('./cicd/pipelines/terraform/'){
             sh 'terraform plan -no-color -out tf.plan'
+            sh 'terraform show tf.plan'
             requiresWarning = checkForJenkinsMasterUpdates 'tf.plan';
           }
           
@@ -63,11 +64,9 @@ pipeline {
     always {
       withCredentials([gitUsernamePassword(credentialsId: 'github-account', gitToolName: 'git-tool')]) {
             sh '''
-            set +x
             git add .
             git commit -m "Post-build Commit"
             git push origin HEAD:main
-            set -x
             '''
       }
 
