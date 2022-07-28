@@ -19,26 +19,34 @@ pipeline {
     }
     stage('terraform') {
       steps {
-        sh 'terraform -chdir=./cicd/pipelines/terraform/ init -no-color'
+        dir('./cicd/pipelines/terraform/'){
+          sh 'terraform init'
+        } 
       }
     }
     stage('approval'){
       steps{
 
         script{
-          
-          sh 'terraform -chdir=./cicd/pipelines/terraform/ plan -no-color -out tf.plan'
 
+          dir('./cicd/pipelines/terraform/'){
+            sh 'terraform plan -no-color -out tf.plan'
+          }
+          
           def requiresWarning = checkForJenkinsMasterUpdates './cicd/pipelines/terraform/tf.plan';
 
            if(requiresWarning){
+
             timeout(time: 5, unit: "MINUTES") {
                 input message: '\033[31mTHIS WILL TRIGGER A RESTART. CHECK WITH THE BUILD TEAMS BEFORE APPROVING.\033[0m Do you want the deploy to Proceed?', ok: 'Yes'
             }
+
            } else {
+
             timeout(time: 5, unit: "MINUTES") {
                 input message: 'Do you want the deploy to Proceed?', ok: 'Yes'
             }
+            
            }
 
         }
