@@ -31,10 +31,9 @@ pipeline {
 
           dir('./cicd/pipelines/terraform/'){
             sh 'terraform plan -no-color -out tf.plan'
+            def requiresWarning = checkForJenkinsMasterUpdates 'tf.plan';
           }
           
-          def requiresWarning = checkForJenkinsMasterUpdates './cicd/pipelines/terraform/tf.plan';
-
            if(requiresWarning){
 
             timeout(time: 5, unit: "MINUTES") {
@@ -46,7 +45,7 @@ pipeline {
             timeout(time: 5, unit: "MINUTES") {
                 input message: 'Do you want the deploy to Proceed?', ok: 'Yes'
             }
-            
+
            }
 
         }
