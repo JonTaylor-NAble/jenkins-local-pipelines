@@ -32,8 +32,7 @@ pipeline {
           def requiresWarning = false;
 
           dir('./cicd/pipelines/terraform/'){
-            sh 'terraform plan -no-color -out tf.plan'
-            sh 'terraform show tf.plan'
+            sh 'terraform plan -out tf.plan'
             requiresWarning = checkForJenkinsMasterUpdates 'tf.plan';
           }
           
