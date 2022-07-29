@@ -66,3 +66,9 @@ spec:
       repositoryBranch: main
       repositoryUrl: https://github.com/jontaylor-nable/jenkins-local-pipelines.git
       pollSCM: "*/1 * * * *"
+    - id: terraform4
+      targets: "seed/jobs/terraform/*.groovy"
+      description: "Example TF Repository"
+      repositoryBranch: main
+      repositoryUrl: https://github.com/jontaylor-nable/jenkins-local-pipelines.git
+      pollSCM: "*/1 * * * *"
