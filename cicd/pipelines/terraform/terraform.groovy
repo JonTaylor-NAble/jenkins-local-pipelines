@@ -33,7 +33,7 @@ pipeline {
 
           dir('./cicd/pipelines/terraform/'){
             sh 'terraform plan -out tf.plan'
-            requiresWarning = checkForJenkinsMasterUpdates 'tf.plan';
+            requiresWarning = northstar.checkForJenkinsMasterUpdates('tf.plan');
           }
           
            if(requiresWarning){
