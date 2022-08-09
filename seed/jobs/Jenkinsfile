@@ -1,4 +1,11 @@
 node {
-    def template = northstar.getSeedJobTemplate();
-    jobDsl scriptText: template // Run Job DSL
+    stage('Checkout'){
+        steps{
+            checkout scm
+        }
+    }
+    stage('Job DSL'){
+        def template = northstar.getSeedJobTemplate();
+        jobDsl scriptText: template // Run Job DSL
+    }
 }
