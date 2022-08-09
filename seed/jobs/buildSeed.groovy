@@ -1,2 +1,3 @@
-hudson.FilePath workspace = hudson.model.Executor.currentExecutor().getCurrentWorkspace()
-echo workspace.toString();
+
+additionalClasspath('/jenkins-local-shared-lib.jar')
+northstar.buildSeedJobs(null);
