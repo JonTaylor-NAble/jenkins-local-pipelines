@@ -1,6 +1,0 @@
-repos:
-  - name: "Example"
-    url: "http://test.net"
-
-  - name: "Example2"
-    url: "http://test2.net"
