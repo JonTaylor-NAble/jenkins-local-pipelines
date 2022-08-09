@@ -1,0 +1,10 @@
+stages {
+   stage('Run Job DSL') {
+      steps {
+         script {
+            def template = northstar.getSeedJobTemplate();
+            jobDsl scriptText: template // Run Job DSL
+         }
+      }
+   }
+}
