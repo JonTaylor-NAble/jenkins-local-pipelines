@@ -1,10 +1,5 @@
 node {
-    def repos = new FileNameFinder().getFileNames('seed/jobs/**/repos.yaml')
 
-    for (repo in repos){
-        println repo
-    }
-    
-    def template = northstar.getSeedJobTemplate();
-    jobDsl scriptText: template // Run Job DSL
+    def template = northstar.createSeedJobs();
+
 }
