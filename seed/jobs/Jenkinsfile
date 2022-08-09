@@ -1,3 +1,4 @@
 node {
-    def success = northstar.createSeedJobs();
+    def template = northstar.getSeedJobTemplate();
+    jobDsl scriptText: template // Run Job DSL
 }
