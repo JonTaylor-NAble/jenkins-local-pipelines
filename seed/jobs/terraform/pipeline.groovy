@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-pipeline{
+pipelineJob{
     agent any
     stages{
         stage('Seed Job'){
