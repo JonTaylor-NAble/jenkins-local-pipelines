@@ -1,3 +1,3 @@
-library 'jenkins-local-shared-lib'
+@Library('northstar')
 
 northstar.buildSeedJobs(null)
