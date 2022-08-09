@@ -1,5 +1,3 @@
 node {
-
-    def template = northstar.createSeedJobs();
-
+    def success = northstar.createSeedJobs();
 }
