@@ -1,0 +1,5 @@
+repos:
+  - pipelineName: "example-pipeline"
+    repoOwner: "JonTaylor-NAble"
+    repository: "jenkins-local-pipelines"
+    scriptPath: "cicd/pipelines/terraform/exampleBuild.groovy"
