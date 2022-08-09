@@ -1,31 +1,19 @@
-def gitCredentialsId      = 'github-account'
-def jobsRepoName          = 'https://github.com/jontaylor-nable/jenkins-local-pipelines.git'
-def sharedLibraryRepoName = 'https://github.com/jontaylor-nable/jenkins-local-shared-lib.git'
+#!/usr/bin/env groovy
 
-pipelineJob {
-    definition{
-        pipeline{
-            agent any
-            stages{
-                stage('Seed Job') {
-                    agent any
-                    steps {
+pipelineJob('build-operator-service-for-jenkins') {
+    displayName('Build Operator Service for Jenkins')
 
-                        checkout([
-                            $class: 'GitSCM', 
-                            branches: [[name: '*/main']], 
-                            doGenerateSubmoduleConfigurations: false,
-                            extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'shared-library']], 
-                            submoduleCfg: [],
-                            userRemoteConfigs: [[credentialsId:  gitCredentialsId, url: sharedLibraryRepoName ]]
-                            ])
-
-                        git url: jobsRepoName, changelog: false, credentialsId: gitCredentialsId, poll: false, branch: 'main'
-                        jobDsl targets: 'seed/jobs/**/pipeline.groovy', additionalClasspath: 'shared-library/src'
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote {
+                        url('https://github.com/jontaylor-nable/jenkins-local-pipelines.git')
                     }
+                    branches('*/main')
                 }
             }
+            scriptPath('cicd/pipelines/example/exampleBuild.groovy')
         }
     }
-    
 }
