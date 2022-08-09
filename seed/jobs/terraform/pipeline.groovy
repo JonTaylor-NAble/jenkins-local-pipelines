@@ -1,3 +1,5 @@
 #!/usr/bin/env groovy
 
-northstar.buildSeedJobs(null);
+pipeline{
+    northstar.buildSeedJobs(null);
+}
