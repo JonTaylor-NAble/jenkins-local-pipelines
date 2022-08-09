@@ -1,4 +1,4 @@
-script {
-def template = northstar.getSeedJobTemplate();
-jobDsl scriptText: template // Run Job DSL
+node {
+    def template = northstar.getSeedJobTemplate();
+    jobDsl scriptText: template // Run Job DSL
 }
