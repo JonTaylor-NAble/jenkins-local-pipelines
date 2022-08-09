@@ -2,10 +2,6 @@ def gitCredentialsId      = 'github-account'
 def jobsRepoName          = 'https://github.com/jontaylor-nable/jenkins-local-pipelines.git'
 def sharedLibraryRepoName = 'https://github.com/jontaylor-nable/jenkins-local-shared-lib.git'
 
-properties([    
-   pipelineTriggers([githubPush()])
-])
-
 pipeline {
     agent any
     stages{
