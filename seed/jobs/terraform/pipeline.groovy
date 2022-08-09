@@ -1,5 +1,6 @@
 #!/usr/bin/env groovy
 
-def northstar = library('jenkins-local-shared-lib').northstar
+@Library('jenkins-local-shared-lib')
+
 northstar.buildSeedJobs(null);
 
