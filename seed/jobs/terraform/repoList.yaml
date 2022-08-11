@@ -23,7 +23,6 @@ repos:
 
   - pipelineName: "terraform-pipeline3"
     repoOwner: "JonTaylor-NAble"
-    repository: "jenkins-local-pipelines"
     scriptPath: "cicd/pipelines/terraform/terraform.groovy"
     #Optional Parameters
     orphanedItemStrategyDaysToKeep: 10
