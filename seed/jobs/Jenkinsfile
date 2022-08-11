@@ -3,7 +3,7 @@ node {
             checkout scm
     }
     stage('Job DSL'){
-        def template = northstar.getSeedJobTemplate('seed/jobs/**/repoList.yaml');
+        def template = northstar.getSeedJobDSL('seed/jobs/**/repoList.yaml');
         jobDsl scriptText: template // Run Job DSL
     }
 }
