@@ -3,6 +3,19 @@ repos:
     repoOwner: "JonTaylor-NAble"
     repository: "jenkins-local-pipelines"
     scriptPath: "cicd/pipelines/terraform/terraform.groovy"
+    
+    #Optional Parameters
+    orphanedItemStrategyDaysToKeep: 30 
+    orphanedItemStrategyNumToKeep: 30 
+    branchDiscoveryTraitStrategyId: 1 
+    originPullRequestTraitStrategyId: 2
+    deleteUntrackedNestedRepositories: true
+
+  - pipelineName: "terraform-pipeline2"
+    repoOwner: "JonTaylor-NAble"
+    repository: "jenkins-local-pipelines"
+    scriptPath: "cicd/pipelines/terraform/terraform.groovy"
+    
     #Optional Parameters
     orphanedItemStrategyDaysToKeep: 30 
     orphanedItemStrategyNumToKeep: 30 
