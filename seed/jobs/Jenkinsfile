@@ -3,7 +3,8 @@ node {
             checkout scm
     }
     stage('Job DSL'){
-        def template = northstar.getSeedJobDSL('seed/jobs/**/repoList.yaml');
+        def lib = library('jenkins-local-shared-lib').northstar
+        def template = northstar.getSeedJobDSL('seed/jobs/terraform/**/repoList.yaml');
         jobDsl scriptText: template // Run Job DSL
     }
 }
