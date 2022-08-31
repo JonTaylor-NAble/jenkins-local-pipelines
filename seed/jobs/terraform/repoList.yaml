@@ -10,7 +10,7 @@ repos:
     orphanedItemStrategyNumToKeep: 30 
     branchDiscoveryTraitStrategyId: 1 
     originPullRequestTraitStrategyId: 2
-    deleteUntrackedNestedRepositories: true
+    deleteUntrackedNestedRepositories: "true"
   
   - type: "pipelineJob"
     pipelineName: "terraform-pipeline-single"
