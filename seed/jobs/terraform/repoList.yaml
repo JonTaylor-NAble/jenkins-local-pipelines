@@ -1,24 +1,32 @@
 repos:
-  - pipelineName: "terraform-pipeline"
+  - type: "multibranchPipelineJob"
+    pipelineName: "terraform-pipeline"
     repoOwner: "JonTaylor-NAble"
     repository: "jenkins-local-pipelines"
     scriptPath: "cicd/pipelines/terraform/terraform.groovy"
-    
+    githubCredentials: "github-account"
     #Optional Parameters
     orphanedItemStrategyDaysToKeep: 30 
     orphanedItemStrategyNumToKeep: 30 
     branchDiscoveryTraitStrategyId: 1 
     originPullRequestTraitStrategyId: 2
     deleteUntrackedNestedRepositories: true
-
-  - pipelineName: "terraform-pipeline2"
+  
+  - type: "pipelineJob"
+    pipelineName: "terraform-pipeline-single"
     repoOwner: "JonTaylor-NAble"
     repository: "jenkins-local-pipelines"
+    branch: "main"
     scriptPath: "cicd/pipelines/terraform/terraform.groovy"
-    
-    #Optional Parameters
-    orphanedItemStrategyDaysToKeep: 30 
-    orphanedItemStrategyNumToKeep: 30 
-    branchDiscoveryTraitStrategyId: 1 
-    originPullRequestTraitStrategyId: 2
-    deleteUntrackedNestedRepositories: true
+    githubCredentials: "github-account"
+    #OptionalParameters
+    parameters:
+      - type: "stringParameter"
+        name: "TestParameter"
+        defaultValue: "Default value here"
+        description: "This is a test parameter"
+      - type: "stringParameter"
+        name: "TestParameter2"
+        defaultValue: "Default value 2 here"
+        description: "This is another test parameter"
+    logRotatorDaysToKeep: 10
