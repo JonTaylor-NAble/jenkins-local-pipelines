@@ -21,11 +21,11 @@ repos:
     githubCredentials: "github-account"
     #OptionalParameters
     parameters:
-      - type: "stringParameter"
+      - type: "stringParam"
         name: "TestParameter"
         defaultValue: "Default value here"
         description: "This is a test parameter"
-      - type: "stringParameter"
+      - type: "stringParam"
         name: "TestParameter2"
         defaultValue: "Default value 2 here"
         description: "This is another test parameter"
