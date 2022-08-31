@@ -6,10 +6,10 @@ repos:
     scriptPath: "cicd/pipelines/terraform/terraform.groovy"
     githubCredentials: "github-account"
     #Optional Parameters
-    orphanedItemStrategyDaysToKeep: 30 
-    orphanedItemStrategyNumToKeep: 30 
-    branchDiscoveryTraitStrategyId: 1 
-    originPullRequestTraitStrategyId: 2
+    orphanedItemStrategyDaysToKeep: "30"
+    orphanedItemStrategyNumToKeep: "30"
+    branchDiscoveryTraitStrategyId: "1"
+    originPullRequestTraitStrategyId: "2"
     deleteUntrackedNestedRepositories: "true"
   
   - type: "pipelineJob"
@@ -29,4 +29,4 @@ repos:
         name: "TestParameter2"
         defaultValue: "Default value 2 here"
         description: "This is another test parameter"
-    logRotatorDaysToKeep: 10
+    logRotatorDaysToKeep: "10"
