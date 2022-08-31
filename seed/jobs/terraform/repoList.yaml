@@ -1,3 +1,11 @@
+folders:
+  - folderName: "TESTS"
+    description: "This is a folder"
+    permissions:
+      - roleName: "/Auth/Jenkins/MA"
+        accessLevel: "readOnly"
+    buildClouds: ["pecn","any"]
+
 repos:
   - type: "multibranchPipelineJob"
     pipelineName: "terraform-pipeline"
@@ -13,7 +21,7 @@ repos:
     deleteUntrackedNestedRepositories: "true"
   
   - type: "pipelineJob"
-    pipelineName: "terraform-pipeline-single"
+    pipelineName: "TESTS/terraform-pipeline-single"
     repoOwner: "JonTaylor-NAble"
     repository: "jenkins-local-pipelines"
     branch: "main"
@@ -30,11 +38,3 @@ repos:
         defaultValue: "Default value 2 here"
         description: "This is another test parameter"
     logRotatorDaysToKeep: "10"
-
-folders:
-  - folderName: "TESTS"
-    description: "This is a folder"
-    permissions:
-      - roleName: "/Auth/Jenkins/MA"
-        accessLevel: "readOnly"
-    buildClouds: ["pecn","any"]
