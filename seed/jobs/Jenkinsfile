@@ -5,6 +5,7 @@ node {
     stage('Job DSL'){
         def lib = library('jenkins-local-shared-lib').northstar
         def template = northstar.getSeedJobDSL('seed/jobs/terraform/**/repoList.yaml');
+        echo template;
         jobDsl scriptText: template // Run Job DSL
     }
 }
