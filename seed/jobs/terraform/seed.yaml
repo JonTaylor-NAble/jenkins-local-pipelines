@@ -1,5 +1,5 @@
 folders:
-  - folderName: "TESTS"
+  - folderName: "Templated Seed Jobs"
     description: "This is a folder"
     permissions:
       - roleName: "/Auth/Jenkins/MA"
