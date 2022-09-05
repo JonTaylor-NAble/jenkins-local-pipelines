@@ -6,7 +6,7 @@ folders:
         accessLevel: "readOnly"
     buildClouds: ["pecn","any"]
   
-  - folderName: "TESTS/Subfolder"
+  - folderName: "Templated Seed Jobs/Subfolder"
     description: "This is a folder"
     permissions:
       - roleName: "/Auth/Jenkins/MA"
@@ -15,7 +15,7 @@ folders:
 
 repos:
   - type: "multibranchPipelineJob"
-    pipelineName: "terraform-pipeline"
+    pipelineName: "Templated Seed Jobs/Subfolder/terraform-pipeline"
     repoOwner: "JonTaylor-NAble"
     repository: "jenkins-local-pipelines"
     scriptPath: "cicd/pipelines/terraform/terraform.groovy"
@@ -28,7 +28,7 @@ repos:
     deleteUntrackedNestedRepositories: "true"
   
   - type: "pipelineJob"
-    pipelineName: "TESTS/terraform-pipeline-single"
+    pipelineName: "Templated Seed Jobs/Subfolder/terraform-pipeline-single"
     repoOwner: "JonTaylor-NAble"
     repository: "jenkins-local-pipelines"
     branch: "main"
