@@ -7,11 +7,7 @@ folders:
     buildClouds: ["pecn","any"]
   
   - folderName: "Templated Seed Jobs/Subfolder"
-    description: "This is a folder"
-    permissions:
-      - roleName: "/Auth/Jenkins/MA"
-        accessLevel: "readOnly"
-    buildClouds: ["pecn","any"]
+    description: "This is a subfolder"
 
 repos:
   - type: "multibranchPipelineJob"
