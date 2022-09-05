@@ -1,12 +1,12 @@
 folders:
-  - folderName: "TESTS/Subfolder"
+  - folderName: "TESTS"
     description: "This is a folder"
     permissions:
       - roleName: "/Auth/Jenkins/MA"
         accessLevel: "readOnly"
     buildClouds: ["pecn","any"]
-
-  - folderName: "TESTS"
+  
+  - folderName: "TESTS/Subfolder"
     description: "This is a folder"
     permissions:
       - roleName: "/Auth/Jenkins/MA"
