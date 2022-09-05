@@ -3,7 +3,6 @@ node {
             checkout scm
     }
     stage('Job DSL'){
-        def lib = library('jenkins-local-shared-lib').northstar
         def template = northstar.getSeedJobDSL('seed/jobs/terraform/**/seed.yaml');
         echo template;
         jobDsl scriptText: template // Run Job DSL
