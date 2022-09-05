@@ -39,5 +39,15 @@ repos:
       - type: "stringParam"
         name: "TestParameter"
         defaultValue: "Default value here"
-        description: "This is a test parameter"
+        description: "This is a test string parameter"
+
+      - type: "booleanParam"
+        name: "BooleanParameter"
+        defaultValue: true
+        description: "This is a test bool parameter"
+
+      - type: "choiceParam"
+        name: "ChoiceParameter"
+        choices: ["Choice A (default)","Choice B", "Choice C"]
+        description: "This is a test choice parameter"
     logRotatorDaysToKeep: "10"
