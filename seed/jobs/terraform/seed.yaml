@@ -11,7 +11,7 @@ folders:
 
 repos:
   - type: "multibranchPipelineJob"
-    pipelineName: "Templated Seed Jobs/Subfolder/terraform-pipeline"
+    pipelineName: "Templated Seed Jobs/Subfolder/terraform-pipeline with a space"
     repoOwner: "JonTaylor-NAble"
     repository: "jenkins-local-pipelines"
     scriptPath: "cicd/pipelines/terraform/terraform.groovy"
