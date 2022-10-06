@@ -22,6 +22,11 @@ repos:
     branchDiscoveryTraitStrategyId: "1"
     originPullRequestTraitStrategyId: "2"
     deleteUntrackedNestedRepositories: "true"
+    parameters:
+    - type: "stringParam"
+      name: "TestParameter"
+      defaultValue: "Default value here MB"
+      description: "This is a test string parameter in a MB pipeline"
   
   - type: "pipelineJob"
     pipelineName: "Templated Seed Jobs/Subfolder/terraform-pipeline-single"
